@@ -12,7 +12,7 @@ import './App.css';
    (2-auth.html links to 3-dashboard.html, etc).
 ------------------------------------------------------------------- */
 
-const API_BASE = "http://agrovite-server.onrender.com/api";
+const API_BASE = "https://agrovite-server.onrender.com/api";
 const SESSION_KEY = "agrovite_user";
 
 const CARD_BG_PALETTE = ["#FDEBD3", "#FCE1DA", "#F4EAC7", "#FBE3B8", "#E4EFD8", "#E8DCC8"];
