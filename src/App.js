@@ -12,11 +12,8 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 ------------------------------------------------------------------- */
 
  HEAD
-const API_BASE = "http://agrovite-server.onrender.com/api 
 
-const API_BASE = Processing.env.REACT_APP_API_BASE||
-"http://localhost:4000/api";
- bef35a318daf9fa9d06521478941f732bd4a225e
+const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:4000/api";
 const SESSION_KEY = "agrovite_user";
 
 const CARD_BG_PALETTE = ["#FDEBD3", "#FCE1DA", "#F4EAC7", "#FBE3B8", "#E4EFD8", "#E8DCC8"];
