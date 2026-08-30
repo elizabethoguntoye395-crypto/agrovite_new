@@ -12,9 +12,10 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 ------------------------------------------------------------------- */
 
  HEAD
-const API_BASE = "http://agrovite-server.onrender.com/api
+const API_BASE = "http://agrovite-server.onrender.com/api 
 
-const API_BASE = "http://localhost:4000/api";
+const API_BASE = Processing.env.REACT_APP_API_BASE||
+"http://localhost:4000/api";
  bef35a318daf9fa9d06521478941f732bd4a225e
 const SESSION_KEY = "agrovite_user";
 
@@ -712,7 +713,7 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
               </div>
             )}
 
-<<<<<<< HEAD
+ HEAD
             {step === "otp" && (
               <div className="step active">
                 <button className="back-btn" onClick={() => setStep("auth")}>← Back</button>
@@ -748,7 +749,7 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
                     <>Didn't get it? <button onClick={resendOtp} disabled={resendLoading}>{resendLoading ? "Sending…" : "Resend code"}</button></>
                   )}
                 </div>
-=======
+========
             {step === "verify" && (
               <div className="step active">
                 <button className="back-btn" onClick={() => setStep("auth")}>← Back</button>
