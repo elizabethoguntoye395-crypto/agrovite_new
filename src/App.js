@@ -11,7 +11,11 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
    (2-auth.html links to 3-dashboard.html, etc).
 ------------------------------------------------------------------- */
 
-const API_BASE = "http://agrovite-server.onrender.com/api";
+ HEAD
+const API_BASE = "http://agrovite-server.onrender.com/api
+
+const API_BASE = "http://localhost:4000/api";
+ bef35a318daf9fa9d06521478941f732bd4a225e
 const SESSION_KEY = "agrovite_user";
 
 const CARD_BG_PALETTE = ["#FDEBD3", "#FCE1DA", "#F4EAC7", "#FBE3B8", "#E4EFD8", "#E8DCC8"];
@@ -486,13 +490,18 @@ footer{ padding:54px 0 34px; }
 
 function AuthScreen({ initialTab, onAuthed, onBack }) {
   const [tab, setTab] = useState(initialTab || "login");
+<<<<<<< HEAD
   const [step, setStep] = useState("auth"); // auth | otp | qr | done
+=======
+  const [step, setStep] = useState("auth"); // auth | verify | qr | done
+>>>>>>> bef35a318daf9fa9d06521478941f732bd4a225e
   const [fullName, setFullName] = useState("");
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [pw, setPw] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [pendingUser, setPendingUser] = useState(null);
+<<<<<<< HEAD
   const [pendingEmail, setPendingEmail] = useState("");
   const [qrTimer, setQrTimer] = useState(60);
 
@@ -504,6 +513,11 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
   const [resendCooldown, setResendCooldown] = useState(0);
   const [resendMessage, setResendMessage] = useState("");
 
+=======
+  const [verifyChoice, setVerifyChoice] = useState("face");
+  const [qrTimer, setQrTimer] = useState(60);
+
+>>>>>>> bef35a318daf9fa9d06521478941f732bd4a225e
   useEffect(() => {
     if (step !== "qr") return;
     setQrTimer(60);
@@ -511,17 +525,21 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
     return () => clearInterval(id);
   }, [step]);
 
+<<<<<<< HEAD
   useEffect(() => {
     if (resendCooldown <= 0) return;
     const id = setInterval(() => setResendCooldown((s) => Math.max(0, s - 1)), 1000);
     return () => clearInterval(id);
   }, [resendCooldown]);
 
+=======
+>>>>>>> bef35a318daf9fa9d06521478941f732bd4a225e
   const submitAuth = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
     try {
+<<<<<<< HEAD
       const url = tab === "login" ? `${API_BASE}/login` : `${API_BASE}/register`;
       const body =
         tab === "login"
@@ -543,6 +561,28 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
       setResendMessage("");
       setResendCooldown(RESEND_COOLDOWN_SECONDS_CLIENT);
       setStep("otp");
+=======
+      if (tab === "login") {
+        const res = await fetch(`${API_BASE}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: emailOrPhone, password: pw }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Login failed");
+        setPendingUser(data.user);
+      } else {
+        const res = await fetch(`${API_BASE}/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ full_name: fullName, email: emailOrPhone, password: pw }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Registration failed");
+        setPendingUser(data.user);
+      }
+      setStep("verify");
+>>>>>>> bef35a318daf9fa9d06521478941f732bd4a225e
     } catch (err) {
       setError(err.message);
     } finally {
@@ -550,6 +590,7 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
     }
   };
 
+<<<<<<< HEAD
   const submitOtp = async (e) => {
     e.preventDefault();
     setOtpError("");
@@ -593,6 +634,8 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
     }
   };
 
+=======
+>>>>>>> bef35a318daf9fa9d06521478941f732bd4a225e
   const authTitle = tab === "signup" ? "Create your account" : "Welcome back";
   const authSub =
     tab === "signup"
@@ -669,6 +712,7 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
               </div>
             )}
 
+<<<<<<< HEAD
             {step === "otp" && (
               <div className="step active">
                 <button className="back-btn" onClick={() => setStep("auth")}>← Back</button>
@@ -704,6 +748,29 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
                     <>Didn't get it? <button onClick={resendOtp} disabled={resendLoading}>{resendLoading ? "Sending…" : "Resend code"}</button></>
                   )}
                 </div>
+=======
+            {step === "verify" && (
+              <div className="step active">
+                <button className="back-btn" onClick={() => setStep("auth")}>← Back</button>
+                <h2>Choose verification method</h2>
+                <p className="sub">Pick how you'd like to confirm it's really you.</p>
+
+                <div className="verify-grid">
+                  {[
+                    { key: "face", ic: "🙂", lbl: "Face ID" },
+                    { key: "email", ic: "✉️", lbl: "Link email" },
+                    { key: "phone", ic: "📱", lbl: "Phone number" },
+                    { key: "loc", ic: "📍", lbl: "Location & name" },
+                  ].map((o) => (
+                    <div key={o.key} className={`verify-opt${verifyChoice === o.key ? " selected" : ""}`} onClick={() => setVerifyChoice(o.key)}>
+                      <div className="ic">{o.ic}</div>
+                      <div className="lbl">{o.lbl}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <button className="btn btn-primary" onClick={() => setStep("done")}>Verify &amp; continue →</button>
+>>>>>>> bef35a318daf9fa9d06521478941f732bd4a225e
               </div>
             )}
 
@@ -736,9 +803,12 @@ function AuthScreen({ initialTab, onAuthed, onBack }) {
   );
 }
 
+<<<<<<< HEAD
 const RESEND_COOLDOWN_SECONDS_CLIENT = 60; // mirrors RESEND_COOLDOWN_SECONDS in server.js
 
 
+=======
+>>>>>>> bef35a318daf9fa9d06521478941f732bd4a225e
 const AUTH_CSS = `
 :root{ --forest:#1F4D3A; --forest-deep:#153529; --cream:#F6F1E4; --cream-soft:#FBF8F0; --ochre:#E8A33D; --pepper:#C4471C; --ink:#22261F; --ink-soft:#5B5F52; --line: rgba(34,38,31,0.12); }
 *{box-sizing:border-box; margin:0; padding:0;}
@@ -774,7 +844,10 @@ h1,h2,h3{ font-family:'Fraunces',serif; font-weight:600; letter-spacing:-0.01em;
 .field input{ width:100%; padding:13px 14px; border-radius:12px; border:1.5px solid var(--line); font-family:'Inter',sans-serif; font-size:14.5px; background:var(--cream-soft); transition:border-color .2s; }
 .field input:focus{ border-color:var(--forest); outline:none; }
 .auth-error{ color:var(--pepper); font-size:13px; margin-bottom:14px; }
+<<<<<<< HEAD
 .auth-note{ color:var(--forest); font-size:13px; margin-bottom:14px; }
+=======
+>>>>>>> bef35a318daf9fa9d06521478941f732bd4a225e
 .verify-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:22px; }
 .verify-opt{ border:1.5px solid var(--line); border-radius:14px; padding:16px 12px; text-align:center; cursor:pointer; transition:.2s; background:var(--cream-soft); }
 .verify-opt:hover{ border-color:var(--forest); }
