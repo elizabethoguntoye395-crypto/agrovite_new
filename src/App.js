@@ -315,7 +315,7 @@ function LandingScreen({ onGoAuth }) {
           <div className="foot-grid">
             <div className="foot-brand">
               <div className="logo"><span className="logo-mark">A</span>Agrovite</div>
-              <h1>PROUDLY MADE BY: OGUNTOYE-ELIZABETH.A.</h1>
+              <h1>PROUDLY MADE&OWNED BY: OGUNTOYE-ELIZABETH.A.</h1>
               <p>A direct line between farms and the markets that need them.</p>
             </div>
             <div className="foot-col">
